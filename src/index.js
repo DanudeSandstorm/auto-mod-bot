@@ -1,4 +1,4 @@
-const { Client, Events, GatewayIntentBits, Partials, Collection } = require('discord.js');
+const { Client, Events, GatewayIntentBits, Partials } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const { checkSpam } = require('./antispam');
@@ -13,8 +13,8 @@ if (!process.env.ADMIN_CHANNEL_ID) {
 }
 
 const client = new Client({ 
-    intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages ], 
-    partials: [ Partials.Channel ]
+    intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers ], 
+    partials: [ Partials.Message, Partials.Channel ]
 });
 
 client.once(Events.ClientReady, readyClient => {
@@ -26,6 +26,7 @@ client.on(Events.MessageCreate, async message => {
     checkSpam(client, message);
 });
 
+client.login(process.env.DISCORD_BOT_TOKEN);
 
 /* Windows pick up sigint */
 if (process.platform === 'win32') {

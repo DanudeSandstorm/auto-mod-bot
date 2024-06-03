@@ -42,7 +42,7 @@ function setNewLink(msg, link) {
  * @param {Client} bot
  * @param {Message} msg
  */
-export function checkSpam(bot, msg) {
+function checkSpam(bot, msg) {
     if (/@(here|everyone)/.test(msg.content) && (link_regex.test(msg.content) || number_regex.test(msg.content))) {
       if (msg.member.kickable) {
         msg.member.kick('Spammed same link. Typically spam bot behavior.')
@@ -107,5 +107,6 @@ export function checkSpam(bot, msg) {
     }
   
     return true;
-  }
+}
   
+module.exports = { checkSpam };
