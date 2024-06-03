@@ -45,8 +45,8 @@ function setNewLink(msg, link) {
 function checkSpam(bot, msg) {
     if (/@(here|everyone)/.test(msg.content) && (link_regex.test(msg.content) || number_regex.test(msg.content))) {
       if (msg.member.kickable) {
-        msg.member.kick('Spammed same link. Typically spam bot behavior.')
-        .then(async () => await notifyStaff(bot, msg))
+        notifyStaff(bot, msg)
+        .then(async () => await msg.member.kick('Spammed same link. Typically spam bot behavior.'))
         .then(async () => {
           if (msg.deletable) await msg.delete();
         })
@@ -79,8 +79,8 @@ function checkSpam(bot, msg) {
         });
         if (ids.length >= 3) {
           if (msg.member.kickable) {
-            msg.member.kick('Spammed same link. Typically spam bot behavior.')
-            .then(async () => await notifyStaff(bot, msg))
+            notifyStaff(bot, msg)
+            .then(async () => await msg.member.kick('Spammed same link. Typically spam bot behavior.'))
             .then(async () => {
               for (const { channel, message } of ids) {
                 const chan = bot.channels.cache.get(channel);
